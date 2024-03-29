@@ -16,12 +16,12 @@
     <select id="selectByUsername" resultType="User">
         select <include refid="selectFields"></include>
         from User
-        where id=#{username};
+        where username=#{username};
     </select>
     <select id="selectByEmail" resultType="User">
         select <include refid="selectFields"></include>
         from User
-        where id=#{email};
+        where email=#{email};
     </select>
     <!--> 简单的参数类型不用parameterType 复杂的要parameterType
     java中User没有id属性，id是由数据库创建后产生的id 然后返回来放入java User对象中，所以要设置keyProperty<-->

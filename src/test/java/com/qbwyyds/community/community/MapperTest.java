@@ -1,9 +1,14 @@
 package com.qbwyyds.community.community;
 
+import com.qbwyyds.community.community.dao.CommentMapper;
 import com.qbwyyds.community.community.dao.DiscussPostMapper;
+import com.qbwyyds.community.community.dao.LoginTicketMapper;
 import com.qbwyyds.community.community.dao.UserMapper;
+import com.qbwyyds.community.community.entity.Comment;
 import com.qbwyyds.community.community.entity.DiscussPost;
+import com.qbwyyds.community.community.entity.LoginTicket;
 import com.qbwyyds.community.community.entity.User;
+import com.qbwyyds.community.community.utils.CommunityUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +26,10 @@ public class MapperTest {
     private UserMapper userMapper;
     @Autowired
     private DiscussPostMapper discussPostMapper;
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
+    @Autowired
+    private CommentMapper commentMapper;
 
     @Test
     public void testSelectUser(){
@@ -65,5 +74,36 @@ public class MapperTest {
 
         int i1 = discussPostMapper.selectDiscussPostRows(111);
         System.out.println(i1);
+    }
+
+    @Test
+    public void testinsertLoginTicket(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(162);
+        loginTicket.setTicket("abc1s23");
+        loginTicket.setExpired(new Date());
+        loginTicket.setStatus(0);
+        int i = loginTicketMapper.insertLoginTicket(loginTicket);
+        System.out.println(loginTicket);
+        LoginTicket loginTicket1 = loginTicketMapper.selectByTicket("abc1s23");
+    }
+
+    @Test
+    public void test(){
+        LoginTicket loginTicket = loginTicketMapper.selectByTicket("abc1");
+        System.out.println(loginTicket);
+        loginTicketMapper.updateStatus("abc1",1);
+        loginTicket = loginTicketMapper.selectByTicket("abc1");
+        System.out.println(loginTicket);
+    }
+
+    @Test
+    public void commenttest(){
+        List<Comment> comments = commentMapper.selectCommentByEntity(1, 228, 0, 5);
+        for (Comment comment:comments){
+            System.out.println(comment);
+        }
+        int i = commentMapper.selectCountByEntity(1, 228);
+        System.out.println(i);
     }
 }

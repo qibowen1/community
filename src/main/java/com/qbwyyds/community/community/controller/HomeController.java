@@ -5,6 +5,8 @@ import com.qbwyyds.community.community.entity.Page;
 import com.qbwyyds.community.community.entity.User;
 import com.qbwyyds.community.community.service.DiscussPostService;
 import com.qbwyyds.community.community.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import java.util.*;
 
 @Controller
 public class HomeController {
+
     @Autowired
     private DiscussPostService discussPostService;
     @Autowired

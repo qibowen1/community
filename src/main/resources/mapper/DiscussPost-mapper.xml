@@ -5,7 +5,10 @@
 <mapper namespace="com.qbwyyds.community.community.dao.DiscussPostMapper">
     <!--><-->
     <sql id="selectField">
-        id, user_id, title, content, type, status, create_time, comment_count, score
+        id, <include refid="insertField"></include>
+    </sql>
+    <sql id="insertField">
+        user_id, title, content, type, status, create_time, comment_count, score
     </sql>
     <!-->dao中返回的是list<DiscussPost> resultType可以只写DiscussPost<-->
     <!-->动态sql用<if test=""><-->
@@ -26,4 +29,14 @@
             and user_id=#{userId}
         </if>
     </select>
+
+    <select id="selectDisscusPostByid" resultType="DiscussPost">
+        select <include refid="selectField"></include>
+        from discuss_post where id=#{id}
+    </select>
+
+    <insert id="insertDisscussPost" parameterType="DiscussPost" keyProperty="id">
+        insert into discuss_post (<include refid="insertField"></include>)
+        values(#{userId},#{title},#{content},#{type},#{status},#{createTime},#{commentCount},#{score})
+    </insert>
 </mapper>

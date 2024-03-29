@@ -1,6 +1,8 @@
 package com.qbwyyds.community.community;
 
+import com.qbwyyds.community.community.utils.SensitiveFilter;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -13,6 +15,9 @@ import java.util.Date;
 @ContextConfiguration(classes = CommunityApplication.class)//加注解以原版配置运行
 class CommunityApplicationTests implements ApplicationContextAware {//beanFactory接口的实现接口
 	ApplicationContext applicationContext;//暂存容器
+	@Autowired
+	SensitiveFilter sensitiveFilter;
+
 	@Test
 	void contextLoads() {
 	}
@@ -29,6 +34,12 @@ class CommunityApplicationTests implements ApplicationContextAware {//beanFactor
 	public void testBeanConfig(){
 		SimpleDateFormat simpleDateFormat = applicationContext.getBean(SimpleDateFormat.class);
 		System.out.println(simpleDateFormat.format(new Date()));
+	}
+
+	@Test
+	public void testsesitive(){
+		String s=sensitiveFilter.filter("哈哈哈 我要赌博！！！");
+		System.out.println(s);
 	}
 
 }
