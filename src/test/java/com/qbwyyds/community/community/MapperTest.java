@@ -1,13 +1,7 @@
 package com.qbwyyds.community.community;
 
-import com.qbwyyds.community.community.dao.CommentMapper;
-import com.qbwyyds.community.community.dao.DiscussPostMapper;
-import com.qbwyyds.community.community.dao.LoginTicketMapper;
-import com.qbwyyds.community.community.dao.UserMapper;
-import com.qbwyyds.community.community.entity.Comment;
-import com.qbwyyds.community.community.entity.DiscussPost;
-import com.qbwyyds.community.community.entity.LoginTicket;
-import com.qbwyyds.community.community.entity.User;
+import com.qbwyyds.community.community.dao.*;
+import com.qbwyyds.community.community.entity.*;
 import com.qbwyyds.community.community.utils.CommunityUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +24,8 @@ public class MapperTest {
     private LoginTicketMapper loginTicketMapper;
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private MessageMapper messageMapper;
 
     @Test
     public void testSelectUser(){
@@ -105,5 +101,42 @@ public class MapperTest {
         }
         int i = commentMapper.selectCountByEntity(1, 228);
         System.out.println(i);
+    }
+    @Test
+    public void addcomment(){
+        Comment comment = new Comment();
+        comment.setContent("sssad");
+        comment.setStatus(0);
+        comment.setCreateTime(new Date());
+        comment.setEntityId(228);
+        comment.setUserId(162);
+        comment.setEntityType(0);
+        int i = commentMapper.insertComment(comment);
+        int i1 = discussPostMapper.updateCommentCount(comment.getId(), discussPostMapper.selectDisscusPostByid(228).getCommentCount() + 1);
+        System.out.println(i);
+        System.out.println(i1);
+    }
+
+    @Test
+    public void test2(){
+        List<Message> messages = messageMapper.selectConvercations(111, 0, 10);
+        for (Message message :messages){
+            System.out.println(message);
+        }
+
+        int i = messageMapper.selectConversationCount(111);
+        System.out.println(i);
+
+        List<Message> messages1 = messageMapper.selectLetters("111_112", 0, 10);
+        for (Message message :messages1){
+            System.out.println(message);
+        }
+
+        int i1 = messageMapper.selectLettersCount("111_112");
+        System.out.println(i1);
+
+        int i2 = messageMapper.selectLetterUnreadCount(131, "111_131");
+        System.out.println(i2);
+
     }
 }

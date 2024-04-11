@@ -40,6 +40,6 @@ public class CommunityUtil {
     }
     //重载
     public static String getJsonString(int code){
-        return getJsonString(code);
+        return getJsonString(code, null, null);
     }
 }

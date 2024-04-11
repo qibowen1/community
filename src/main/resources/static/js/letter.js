@@ -22,7 +22,7 @@ function send_letter() {
 	        $("#hintModal").modal("show");
             setTimeout(function(){
                 $("#hintModal").modal("hide");
-                location.reload();
+                location.reload();//当前页面重载
             }, 2000);
 	    }
 	);
